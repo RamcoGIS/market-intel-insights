@@ -1,6 +1,7 @@
 
 export type Sentiment = 'positive' | 'neutral' | 'negative';
 export type Impact = 'high' | 'medium' | 'low';
+export type TimeRange = 'day' | 'week' | 'month' | 'year' | 'all';
 
 export interface SearchResult {
   id: string;

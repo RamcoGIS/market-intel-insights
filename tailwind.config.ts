@@ -65,20 +65,20 @@ export default {
 				},
                 // Custom colors for sentiment and impact
                 sentiment: {
-                    positive: '#F2FCE2',
-                    negative: '#FEC6A1',
-                    neutral: '#8E9196'
+                    positive: '#E3F2FD', // Light blue for positive
+                    negative: '#FFCDD2', // Light red for negative
+                    neutral: '#ECEFF1'  // Light gray for neutral
                 },
                 impact: {
-                    high: '#8B5CF6',
-                    medium: '#7E69AB',
-                    low: '#F1F0FB'
+                    high: '#1E88E5',   // Medium blue for high impact
+                    medium: '#64B5F6', // Light blue for medium impact
+                    low: '#E3F2FD'     // Very light blue for low impact
                 },
                 brand: {
-                    primary: '#9b87f5',
-                    secondary: '#7E69AB',
-                    dark: '#1A1F2C',
-                    light: '#F1F1F1'
+                    primary: '#1976D2',   // Bright blue primary
+                    secondary: '#2196F3', // Medium blue secondary
+                    dark: '#0D47A1',      // Dark blue 
+                    light: '#E3F2FD'      // Light blue background
                 }
 			},
 			borderRadius: {

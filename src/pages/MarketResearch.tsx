@@ -12,7 +12,7 @@ export default function MarketResearch() {
   const [activeTab, setActiveTab] = useState<TabType>("search");
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header */}
@@ -60,7 +60,7 @@ export default function MarketResearch() {
           </Tabs>
         </div>
 
-        <div className="mt-4 text-center text-sm text-gray-500">
+        <div className="mt-4 text-center text-sm text-blue-600">
           <p>Data is updated in real-time using AI analysis</p>
         </div>
       </div>
