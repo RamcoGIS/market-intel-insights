@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchResult, Sentiment, Impact, TimeRange } from "../types/market-research";
 import { Search, Calendar } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function SearchPanel() {
   const [query, setQuery] = useState("");
@@ -86,74 +87,120 @@ export function SearchPanel() {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="sticky top-0 bg-background pt-2 pb-4 z-10">
-        <form onSubmit={handleSearch} className="flex gap-2">
-          <Input
-            placeholder="Search for market research topics..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="flex-1"
-          />
-          <Button type="submit" disabled={isSearching || !query.trim()}>
-            {isSearching ? "Searching..." : <Search className="mr-2 h-4 w-4" />}
-          </Button>
+    <div className="space-y-6 w-full">
+      <div className="sticky top-0 bg-background pt-2 pb-4 z-10 w-full">
+        <form onSubmit={handleSearch} className="flex gap-2 w-full">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex-1">
+                  <Input
+                    placeholder="Search for market research topics..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Enter your market research query</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button type="submit" disabled={isSearching || !query.trim()}>
+                  {isSearching ? "Searching..." : <Search className="mr-2 h-4 w-4" />}
+                  <span className="hidden sm:inline">Search</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Search for market insights</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </form>
         
         <div className="flex flex-wrap gap-2 mt-4">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-medium">Time Range:</span>
             {(['day', 'week', 'month', 'year', 'all'] as TimeRange[]).map(timeRange => (
-              <Button
-                key={timeRange}
-                variant={filters.timeRange === timeRange ? "default" : "outline"}
-                size="sm"
-                onClick={() => setTimeRange(timeRange)}
-                className="h-7 text-xs capitalize"
-              >
-                <Calendar className="mr-1 h-3 w-3" />
-                {timeRange}
-              </Button>
+              <TooltipProvider key={timeRange}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant={filters.timeRange === timeRange ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setTimeRange(timeRange)}
+                      className="h-7 text-xs capitalize"
+                    >
+                      <Calendar className="mr-1 h-3 w-3" />
+                      {timeRange}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Show results from the last {timeRange}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ))}
           </div>
         </div>
         
         {results.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-4">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm font-medium">Sentiment:</span>
               {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
-                <Button
-                  key={sentiment}
-                  variant={filters.sentiment.includes(sentiment) ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => toggleSentimentFilter(sentiment)}
-                  className="h-7 text-xs capitalize"
-                >
-                  {sentiment}
-                </Button>
+                <TooltipProvider key={sentiment}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant={filters.sentiment.includes(sentiment) ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => toggleSentimentFilter(sentiment)}
+                        className="h-7 text-xs capitalize"
+                      >
+                        {sentiment}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Filter by {sentiment} sentiment</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               ))}
             </div>
             
-            <div className="flex items-center gap-2 ml-4">
+            <div className="flex flex-wrap items-center gap-2 mt-2 sm:mt-0 sm:ml-4">
               <span className="text-sm font-medium">Impact:</span>
               {(['high', 'medium', 'low'] as Impact[]).map(impact => (
-                <Button
-                  key={impact}
-                  variant={filters.impact.includes(impact) ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => toggleImpactFilter(impact)}
-                  className="h-7 text-xs capitalize"
-                >
-                  {impact}
-                </Button>
+                <TooltipProvider key={impact}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant={filters.impact.includes(impact) ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => toggleImpactFilter(impact)}
+                        className="h-7 text-xs capitalize"
+                      >
+                        {impact}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Filter by {impact} impact</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               ))}
             </div>
           </div>
         )}
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-4 w-full">
         {filteredResults.length > 0 ? (
           filteredResults.map(result => (
             <SearchResultCard key={result.id} result={result} />
