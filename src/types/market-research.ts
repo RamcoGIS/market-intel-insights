@@ -1,0 +1,30 @@
+
+export type Sentiment = 'positive' | 'neutral' | 'negative';
+export type Impact = 'high' | 'medium' | 'low';
+
+export interface SearchResult {
+  id: string;
+  headline: string;
+  url: string;
+  summary: string[];
+  sentiment: Sentiment;
+  impact: Impact;
+  source: string;
+  date: string;
+}
+
+export interface TrendItem {
+  id: string;
+  title: string;
+  description: string;
+  strength: number; // 1-10
+  sentiment: Sentiment;
+  relatedTopics: string[];
+}
+
+export interface SearchQuery {
+  id: string;
+  query: string;
+  timestamp: string;
+  results: SearchResult[];
+}
