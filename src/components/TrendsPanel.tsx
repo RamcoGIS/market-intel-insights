@@ -19,11 +19,11 @@ export function TrendsPanel() {
   return (
     <div className="space-y-6 w-full">
       <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-2 z-10 w-full dark:bg-gray-900">
-        <h2 className="text-[16px] font-semibold mb-3">Current Market Trends</h2>
+        <h2 className="text-[16px] font-semibold mb-3 dark:text-gray-200">Current Market Trends</h2>
         
-        <div className="flex gap-4">
-          <div className="filter-card flex-1">
-            <span className="filter-label block">Sentiment</span>
+        <div className="flex flex-wrap gap-6">
+          <div className="flex flex-col">
+            <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Sentiment</span>
             <div className="flex flex-wrap items-center gap-2">
               <TooltipProvider>
                 <Tooltip>
@@ -32,7 +32,7 @@ export function TrendsPanel() {
                       variant="outline"
                       size="sm"
                       onClick={() => setSentimentFilter(null)}
-                      className={`h-7 text-[13px] ${sentimentFilter === null ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                      className={`h-7 text-[13px] ${sentimentFilter === null ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                     >
                       All
                     </Button>
@@ -51,7 +51,7 @@ export function TrendsPanel() {
                         variant="outline"
                         size="sm"
                         onClick={() => setSentimentFilter(sentiment)}
-                        className={`h-7 text-[13px] capitalize ${sentimentFilter === sentiment ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                        className={`h-7 text-[13px] capitalize ${sentimentFilter === sentiment ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                       >
                         {sentiment}
                       </Button>
@@ -65,8 +65,8 @@ export function TrendsPanel() {
             </div>
           </div>
 
-          <div className="filter-card flex-1">
-            <span className="filter-label block">Impact</span>
+          <div className="flex flex-col">
+            <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Impact</span>
             <div className="flex flex-wrap items-center gap-2">
               <TooltipProvider>
                 <Tooltip>
@@ -75,7 +75,7 @@ export function TrendsPanel() {
                       variant="outline"
                       size="sm"
                       onClick={() => setImpactFilter(null)}
-                      className={`h-7 text-[13px] ${impactFilter === null ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                      className={`h-7 text-[13px] ${impactFilter === null ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                     >
                       All
                     </Button>
@@ -94,7 +94,7 @@ export function TrendsPanel() {
                         variant="outline"
                         size="sm"
                         onClick={() => setImpactFilter(impact)}
-                        className={`h-7 text-[13px] capitalize ${impactFilter === impact ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                        className={`h-7 text-[13px] capitalize ${impactFilter === impact ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                       >
                         {impact}
                       </Button>

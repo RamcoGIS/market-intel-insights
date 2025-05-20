@@ -99,12 +99,12 @@ export function HistoryPanel() {
     <div className="space-y-6">
       {!activeQueryData ? (
         <>
-          <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-4 z-10">
-            <h2 className="text-[16px] font-semibold mb-3">Search History</h2>
+          <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-4 z-10 dark:bg-gray-900">
+            <h2 className="text-[16px] font-semibold mb-3 dark:text-gray-200">Search History</h2>
             
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <span className="text-[14px] font-medium">Sentiment</span>
+            <div className="flex flex-wrap gap-6">
+              <div className="flex flex-col">
+                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Sentiment</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
                     <Button
@@ -112,7 +112,7 @@ export function HistoryPanel() {
                       variant="outline"
                       size="sm"
                       onClick={() => toggleSentimentFilter(sentiment)}
-                      className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                      className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                     >
                       {sentiment}
                     </Button>
@@ -120,8 +120,8 @@ export function HistoryPanel() {
                 </div>
               </div>
               
-              <div className="flex flex-col gap-2">
-                <span className="text-[14px] font-medium">Impact</span>
+              <div className="flex flex-col">
+                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Impact</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['high', 'medium', 'low'] as Impact[]).map(impact => (
                     <Button
@@ -129,7 +129,7 @@ export function HistoryPanel() {
                       variant="outline"
                       size="sm"
                       onClick={() => toggleImpactFilter(impact)}
-                      className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                      className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                     >
                       {impact}
                     </Button>
@@ -146,17 +146,17 @@ export function HistoryPanel() {
                   key={queryItem.id} 
                   open={openItems[queryItem.id]} 
                   onOpenChange={() => toggleItem(queryItem.id)}
-                  className="border rounded-lg shadow-sm bg-white"
+                  className="border rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700"
                 >
                   <div className="p-4">
                     <div className="flex justify-between items-start">
                       <div className="space-y-1">
                         <CollapsibleTrigger asChild>
                           <Button variant="ghost" className="p-0 h-auto text-left hover:bg-transparent">
-                            <h3 className="text-[16px] font-medium">{queryItem.query}</h3>
+                            <h3 className="text-[16px] font-medium dark:text-gray-200">{queryItem.query}</h3>
                           </Button>
                         </CollapsibleTrigger>
-                        <div className="flex items-center text-[13px] text-gray-500">
+                        <div className="flex items-center text-[13px] text-gray-500 dark:text-gray-400">
                           <Calendar className="mr-1 h-4 w-4" />
                           {formatDate(queryItem.timestamp)}
                         </div>
@@ -169,8 +169,9 @@ export function HistoryPanel() {
                                 size="sm" 
                                 variant="outline" 
                                 onClick={() => handleViewDetails(queryItem.id)}
+                                className="text-[#667085] dark:text-gray-400"
                               >
-                                <Search className="mr-1 h-4 w-4 text-[#006c8f]" />
+                                <Search className="mr-1 h-4 w-4 text-[#006c8f] dark:text-blue-400" />
                                 View Details
                               </Button>
                             </TooltipTrigger>
@@ -187,9 +188,9 @@ export function HistoryPanel() {
                                 size="sm" 
                                 variant="outline" 
                                 onClick={() => handleRerun(queryItem.query)}
-                                className="w-auto"
+                                className="w-auto text-[#667085] dark:text-gray-400"
                               >
-                                <RefreshCcw className="mr-1 h-4 w-4 text-[#006c8f]" />
+                                <RefreshCcw className="mr-1 h-4 w-4 text-[#006c8f] dark:text-blue-400" />
                                 Re-run
                               </Button>
                             </TooltipTrigger>
@@ -220,10 +221,10 @@ export function HistoryPanel() {
                     </div>
                   </div>
                   <CollapsibleContent className="px-4 pb-4">
-                    <div className="pt-2 border-t">
-                      <h4 className="text-[14px] font-medium text-gray-500 mb-3">Results Summary</h4>
+                    <div className="pt-2 border-t dark:border-gray-700">
+                      <h4 className="text-[14px] font-medium text-gray-500 mb-3 dark:text-gray-400">Results Summary</h4>
                       <div>
-                        <p className="text-[13px] text-gray-600 mb-2">
+                        <p className="text-[13px] text-gray-600 mb-2 dark:text-gray-300">
                           {queryItem.results.length} results • 
                           <span className="ml-1">{
                             queryItem.results.filter(r => r.sentiment === 'positive').length
@@ -234,12 +235,12 @@ export function HistoryPanel() {
                         </p>
                         <div className="flex flex-wrap gap-1">
                           {queryItem.results.slice(0, 3).map((result, i) => (
-                            <span key={i} className="text-[13px] bg-gray-100 px-2 py-1 rounded-full">
+                            <span key={i} className="text-[13px] bg-gray-100 px-2 py-1 rounded-full dark:bg-gray-700 dark:text-gray-300">
                               {result.headline.substring(0, 20)}...
                             </span>
                           ))}
                           {queryItem.results.length > 3 && (
-                            <span className="text-[13px] bg-gray-100 px-2 py-1 rounded-full">
+                            <span className="text-[13px] bg-gray-100 px-2 py-1 rounded-full dark:bg-gray-700 dark:text-gray-300">
                               +{queryItem.results.length - 3} more
                             </span>
                           )}
@@ -250,7 +251,7 @@ export function HistoryPanel() {
                 </Collapsible>
               ))
             ) : (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                 No search history matches your filter criteria
               </div>
             )}
@@ -259,13 +260,13 @@ export function HistoryPanel() {
       ) : (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-[16px] font-semibold">{activeQueryData.query}</h2>
-            <Button variant="outline" onClick={() => setActiveQuery(null)}>
+            <h2 className="text-[16px] font-semibold dark:text-gray-200">{activeQueryData.query}</h2>
+            <Button variant="outline" onClick={() => setActiveQuery(null)} className="dark:border-gray-600 dark:text-gray-300">
               Back to History
             </Button>
           </div>
           
-          <div className="flex items-center text-[13px] text-gray-500 mb-4">
+          <div className="flex items-center text-[13px] text-gray-500 mb-4 dark:text-gray-400">
             <Calendar className="mr-1 h-4 w-4" />
             {formatDate(activeQueryData.timestamp)}
           </div>

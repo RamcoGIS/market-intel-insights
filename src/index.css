@@ -50,6 +50,7 @@
     --tab-selected-text: 197 100% 29%;
     
     --filter-text: 220 16% 46%; /* #667085 in HSL */
+    --filter-heading: 220 24% 17%; /* #1d2939 in HSL */
   }
 
   .dark {
@@ -94,6 +95,7 @@
     --tab-selected-text: 197 100% 70%;
     
     --filter-text: 220 16% 74%; /* Lighter version of #667085 for dark mode */
+    --filter-heading: 220 20% 80%; /* Lighter version of #1d2939 for dark mode */
   }
 }
 
@@ -127,7 +129,11 @@
   }
 
   .filter-label {
-    @apply text-[#667085] dark:text-gray-300 font-medium mb-2;
+    @apply text-[#1d2939] dark:text-gray-200 font-medium mb-2;
+  }
+
+  .filter-value {
+    @apply text-[#667085] dark:text-gray-400;
   }
 }
 

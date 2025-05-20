@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, TrendingUp, History } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { UserAvatar } from "../components/UserAvatar";
+import { ThemeToggle } from "../components/ThemeToggle";
 
 type TabType = "search" | "trends" | "history";
 
@@ -19,15 +20,18 @@ export default function MarketResearch() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc] flex flex-col w-full">
+    <div className="min-h-screen bg-[#f8f9fc] flex flex-col w-full dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full">
+      <div className="bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full dark:bg-gray-800">
         <div className="flex justify-between items-center max-w-[1440px] mx-auto px-4 py-2">
           <div>
-            <h1 className="text-[16px] font-bold text-gray-800">MarketIntel AI</h1>
-            <p className="text-[13px] text-gray-500">Real-time market intelligence</p>
+            <h1 className="text-[16px] font-bold text-gray-800 dark:text-gray-100">MarketIntel AI</h1>
+            <p className="text-[13px] text-gray-500 dark:text-gray-300">Real-time market intelligence</p>
           </div>
-          <UserAvatar name="Alex Johnson" onLogout={handleLogout} />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <UserAvatar name="Alex Johnson" onLogout={handleLogout} />
+          </div>
         </div>
       </div>
 
@@ -41,14 +45,14 @@ export default function MarketResearch() {
             onValueChange={(value) => setActiveTab(value as TabType)}
             className="w-full h-full flex flex-col"
           >
-            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-4 self-center w-[40%] min-w-[300px]">
-              <TabsList className="bg-white w-full">
+            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-4 self-start w-[40%] min-w-[300px] dark:bg-gray-800">
+              <TabsList className="bg-white w-full dark:bg-gray-800">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <TabsTrigger 
                         value="search" 
-                        className={`flex items-center ${activeTab === 'search' ? 'bg-[#eaf4ff] text-[#006c8f]' : ''}`}
+                        className={`flex items-center ${activeTab === 'search' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
                       >
                         <Search className="mr-2 h-4 w-4" />
                         <span>Search</span>
@@ -65,7 +69,7 @@ export default function MarketResearch() {
                     <TooltipTrigger asChild>
                       <TabsTrigger 
                         value="trends" 
-                        className={`flex items-center ${activeTab === 'trends' ? 'bg-[#eaf4ff] text-[#006c8f]' : ''}`}
+                        className={`flex items-center ${activeTab === 'trends' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
                       >
                         <TrendingUp className="mr-2 h-4 w-4" />
                         <span>Trends</span>
@@ -82,7 +86,7 @@ export default function MarketResearch() {
                     <TooltipTrigger asChild>
                       <TabsTrigger 
                         value="history" 
-                        className={`flex items-center ${activeTab === 'history' ? 'bg-[#eaf4ff] text-[#006c8f]' : ''}`}
+                        className={`flex items-center ${activeTab === 'history' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
                       >
                         <History className="mr-2 h-4 w-4" />
                         <span>History</span>
@@ -112,7 +116,7 @@ export default function MarketResearch() {
             </div>
           </Tabs>
           
-          <div className="mt-auto pt-4 text-center text-[13px] text-blue-600">
+          <div className="mt-auto pt-4 text-center text-[13px] text-blue-600 dark:text-blue-400">
             <p>Data is updated in real-time using AI analysis</p>
           </div>
         </div>

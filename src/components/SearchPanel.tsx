@@ -115,9 +115,9 @@ export function SearchPanel() {
           </TooltipProvider>
         </form>
         
-        <div className="flex gap-4 mt-4">
-          <div className="filter-card flex-1">
-            <span className="filter-label block">Time Range</span>
+        <div className="flex flex-wrap gap-4 mt-4">
+          <div className="flex flex-col">
+            <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Time Range</span>
             <div className="flex flex-wrap items-center gap-2">
               {(['day', 'week', 'month', 'year', 'all'] as TimeRange[]).map(timeRange => (
                 <TooltipProvider key={timeRange}>
@@ -127,7 +127,7 @@ export function SearchPanel() {
                         variant="outline"
                         size="sm"
                         onClick={() => setTimeRange(timeRange)}
-                        className={`h-7 text-[13px] capitalize ${filters.timeRange === timeRange ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                        className={`h-7 text-[13px] capitalize ${filters.timeRange === timeRange ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                       >
                         <Calendar className="mr-1 h-3 w-3" />
                         {timeRange}
@@ -144,8 +144,8 @@ export function SearchPanel() {
           
           {results.length > 0 && (
             <>
-              <div className="filter-card flex-1">
-                <span className="filter-label block">Sentiment</span>
+              <div className="flex flex-col">
+                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Sentiment</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
                     <TooltipProvider key={sentiment}>
@@ -155,7 +155,7 @@ export function SearchPanel() {
                             variant="outline"
                             size="sm"
                             onClick={() => toggleSentimentFilter(sentiment)}
-                            className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                            className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                           >
                             {sentiment}
                           </Button>
@@ -169,8 +169,8 @@ export function SearchPanel() {
                 </div>
               </div>
               
-              <div className="filter-card flex-1">
-                <span className="filter-label block">Impact</span>
+              <div className="flex flex-col">
+                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Impact</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['high', 'medium', 'low'] as Impact[]).map(impact => (
                     <TooltipProvider key={impact}>
@@ -180,7 +180,7 @@ export function SearchPanel() {
                             variant="outline"
                             size="sm"
                             onClick={() => toggleImpactFilter(impact)}
-                            className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                            className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
                           >
                             {impact}
                           </Button>
@@ -204,11 +204,11 @@ export function SearchPanel() {
             <SearchResultCard key={result.id} result={result} />
           ))
         ) : results.length > 0 ? (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             No results match your filter criteria
           </div>
         ) : isSearching ? (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             Searching...
           </div>
         ) : (
