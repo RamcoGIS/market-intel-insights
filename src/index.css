@@ -164,3 +164,13 @@
 .border-sentiment-neutral {
   @apply border-l-blue-500;
 }
+
+/* Add specific styling for focus state on input fields */
+input:focus {
+  @apply border-[#006c8f] shadow-md;
+}
+
+/* Adjust button widths */
+.btn-narrow {
+  @apply w-auto !important;
+}

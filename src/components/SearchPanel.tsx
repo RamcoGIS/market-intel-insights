@@ -88,7 +88,7 @@ export function SearchPanel() {
 
   return (
     <div className="space-y-6 w-full">
-      <div className="sticky top-0 bg-background pt-2 pb-4 z-10 w-full">
+      <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-4 z-10 w-full">
         <form onSubmit={handleSearch} className="relative w-full">
           <TooltipProvider>
             <Tooltip>
@@ -99,7 +99,7 @@ export function SearchPanel() {
                     placeholder="Search for market research topics..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="w-full pl-10"
+                    className="w-full pl-10 focus:border-[#006c8f] focus:shadow-md transition-all"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && query.trim()) {
                         handleSearch(e);
@@ -144,57 +144,61 @@ export function SearchPanel() {
         </div>
         
         {results.length > 0 && (
-          <div className="flex flex-wrap gap-4 mt-4">
-            <div className="flex flex-col gap-2">
-              <span className="text-[14px] font-medium">Sentiment</span>
-              <div className="flex flex-wrap items-center gap-2">
-                {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
-                  <TooltipProvider key={sentiment}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => toggleSentimentFilter(sentiment)}
-                          className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
-                        >
-                          {sentiment}
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Filter by {sentiment} sentiment</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                ))}
+          <>
+            <div className="flex flex-wrap gap-4 mt-4">
+              <div className="flex flex-col gap-2">
+                <span className="text-[14px] font-medium">Sentiment</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
+                    <TooltipProvider key={sentiment}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => toggleSentimentFilter(sentiment)}
+                            className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                          >
+                            {sentiment}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Filter by {sentiment} sentiment</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  ))}
+                </div>
               </div>
             </div>
             
-            <div className="flex flex-col gap-2">
-              <span className="text-[14px] font-medium">Impact</span>
-              <div className="flex flex-wrap items-center gap-2">
-                {(['high', 'medium', 'low'] as Impact[]).map(impact => (
-                  <TooltipProvider key={impact}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => toggleImpactFilter(impact)}
-                          className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
-                        >
-                          {impact}
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Filter by {impact} impact</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                ))}
+            <div className="flex flex-wrap gap-4 mt-4">
+              <div className="flex flex-col gap-2">
+                <span className="text-[14px] font-medium">Impact</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  {(['high', 'medium', 'low'] as Impact[]).map(impact => (
+                    <TooltipProvider key={impact}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => toggleImpactFilter(impact)}
+                            className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
+                          >
+                            {impact}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Filter by {impact} impact</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </>
         )}
       </div>
       
@@ -212,7 +216,7 @@ export function SearchPanel() {
             Searching...
           </div>
         ) : (
-          <div className="bg-brand-light rounded-lg p-8 text-center">
+          <div className="bg-white rounded-lg p-8 text-center">
             <h3 className="text-[16px] font-medium text-gray-900 mb-2">Find the latest market insights</h3>
             <p className="text-[13px] text-gray-600">
               Enter a search query about market trends, competitors, or industry news to get AI-analyzed results.

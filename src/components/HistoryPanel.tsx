@@ -99,10 +99,10 @@ export function HistoryPanel() {
     <div className="space-y-6">
       {!activeQueryData ? (
         <>
-          <div className="sticky top-0 bg-background pt-2 pb-4 z-10">
+          <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-4 z-10">
             <h2 className="text-[16px] font-semibold mb-3">Search History</h2>
             
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <span className="text-[14px] font-medium">Sentiment</span>
                 <div className="flex flex-wrap items-center gap-2">
@@ -187,6 +187,7 @@ export function HistoryPanel() {
                                 size="sm" 
                                 variant="outline" 
                                 onClick={() => handleRerun(queryItem.query)}
+                                className="w-auto"
                               >
                                 <RefreshCcw className="mr-1 h-4 w-4 text-[#006c8f]" />
                                 Re-run
@@ -204,7 +205,7 @@ export function HistoryPanel() {
                               <Button 
                                 size="sm"
                                 onClick={() => handleEnhance(queryItem.query)}
-                                className="enhance-button"
+                                className="enhance-button w-auto"
                               >
                                 <Search className="mr-1 h-4 w-4" />
                                 Enhance
