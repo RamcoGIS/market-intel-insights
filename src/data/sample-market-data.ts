@@ -81,6 +81,7 @@ export const sampleTrends: TrendItem[] = [
     description: "Growing adoption of AI for diagnostics and patient care",
     strength: 8,
     sentiment: "positive",
+    impact: "high",
     relatedTopics: ["machine learning", "healthcare technology", "medical diagnostics"]
   },
   {
@@ -89,6 +90,7 @@ export const sampleTrends: TrendItem[] = [
     description: "Continued investment in tools supporting distributed teams",
     strength: 9,
     sentiment: "positive",
+    impact: "medium",
     relatedTopics: ["virtual offices", "collaboration tools", "digital nomads"]
   },
   {
@@ -97,6 +99,7 @@ export const sampleTrends: TrendItem[] = [
     description: "Companies rebuilding supply chains with focus on redundancy",
     strength: 7,
     sentiment: "neutral",
+    impact: "medium",
     relatedTopics: ["logistics", "manufacturing", "global trade"]
   },
   {
@@ -105,6 +108,7 @@ export const sampleTrends: TrendItem[] = [
     description: "Increased fluctuations in major cryptocurrency valuations",
     strength: 6,
     sentiment: "negative",
+    impact: "high",
     relatedTopics: ["bitcoin", "blockchain", "digital currency", "regulations"]
   },
   {
@@ -113,6 +117,7 @@ export const sampleTrends: TrendItem[] = [
     description: "Brands shifting to eco-friendly packaging solutions",
     strength: 8,
     sentiment: "positive",
+    impact: "medium",
     relatedTopics: ["sustainability", "plastic alternatives", "consumer preferences"]
   },
   {
@@ -121,6 +126,7 @@ export const sampleTrends: TrendItem[] = [
     description: "Increased frequency of major data breaches and ransomware",
     strength: 9,
     sentiment: "negative",
+    impact: "high",
     relatedTopics: ["data security", "privacy", "enterprise protection"]
   }
 ];

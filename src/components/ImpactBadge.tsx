@@ -8,7 +8,7 @@ interface ImpactBadgeProps {
   className?: string;
 }
 
-export function ImpactBadge({ impact, className }: ImpactBadgeProps) {
+export function ImpactBadge({ impact = "medium", className }: ImpactBadgeProps) {
   const baseClass = "inline-flex items-center px-2.5 py-0.5 rounded-full text-[13px] font-medium";
   
   const icons = {
@@ -17,10 +17,13 @@ export function ImpactBadge({ impact, className }: ImpactBadgeProps) {
     low: <TrendingUp className="w-3 h-3 mr-1" />
   };
   
+  // Ensure impact is defined with a fallback
+  const safeImpact = impact || "medium";
+  
   return (
-    <span className={cn(baseClass, `impact-${impact}`, className)}>
-      {icons[impact]}
-      {impact.charAt(0).toUpperCase() + impact.slice(1)} Impact
+    <span className={cn(baseClass, `impact-${safeImpact}`, className)}>
+      {icons[safeImpact]}
+      {safeImpact.charAt(0).toUpperCase() + safeImpact.slice(1)} Impact
     </span>
   );
 }
