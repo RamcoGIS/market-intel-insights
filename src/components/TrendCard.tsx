@@ -33,11 +33,11 @@ export function TrendCard({ trend }: TrendCardProps) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div>
-                    <ImpactBadge impact={trend.impact || "medium"} />
+                    <ImpactBadge impact={trend.impact} />
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{trend.impact || "medium"} impact trend</p>
+                  <p>{trend.impact} impact trend</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

@@ -20,6 +20,7 @@ export interface TrendItem {
   description: string;
   strength: number; // 1-10
   sentiment: Sentiment;
+  impact: Impact; // Added the impact property to the TrendItem interface
   relatedTopics: string[];
 }
 
