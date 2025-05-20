@@ -8,30 +8,27 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 export function TrendsPanel() {
   const [sentimentFilter, setSentimentFilter] = useState<Sentiment | null>(null);
-  const [strengthFilter, setStrengthFilter] = useState<number | null>(null);
   
   const filteredTrends = sampleTrends.filter(trend => {
-    const matchesSentiment = !sentimentFilter || trend.sentiment === sentimentFilter;
-    const matchesStrength = !strengthFilter || trend.strength >= strengthFilter;
-    return matchesSentiment && matchesStrength;
+    return !sentimentFilter || trend.sentiment === sentimentFilter;
   });
 
   return (
     <div className="space-y-6 w-full">
       <div className="sticky top-0 bg-background pt-2 pb-4 z-10 w-full">
-        <h2 className="text-lg font-semibold mb-3">Current Market Trends</h2>
+        <h2 className="text-[16px] font-semibold mb-3">Current Market Trends</h2>
         
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-col gap-2">
+          <span className="text-[14px] font-medium">Sentiment</span>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium">Sentiment:</span>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
-                    variant={sentimentFilter === null ? "default" : "outline"}
+                    variant="outline"
                     size="sm"
                     onClick={() => setSentimentFilter(null)}
-                    className="h-7 text-xs"
+                    className={`h-7 text-[13px] ${sentimentFilter === null ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
                   >
                     All
                   </Button>
@@ -41,61 +38,22 @@ export function TrendsPanel() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            
             {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
               <TooltipProvider key={sentiment}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
-                      variant={sentimentFilter === sentiment ? "default" : "outline"}
+                      variant="outline"
                       size="sm"
                       onClick={() => setSentimentFilter(sentiment)}
-                      className="h-7 text-xs capitalize"
+                      className={`h-7 text-[13px] capitalize ${sentimentFilter === sentiment ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f]' : ''}`}
                     >
                       {sentiment}
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Filter by {sentiment} sentiment</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            ))}
-          </div>
-          
-          <div className="flex flex-wrap items-center gap-2 mt-2 sm:mt-0">
-            <span className="text-sm font-medium">Min Strength:</span>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant={strengthFilter === null ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setStrengthFilter(null)}
-                    className="h-7 text-xs"
-                  >
-                    All
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Show all trend strengths</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            {[7, 8, 9].map(strength => (
-              <TooltipProvider key={strength}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant={strengthFilter === strength ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setStrengthFilter(strength)}
-                      className="h-7 text-xs"
-                    >
-                      {strength}+
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Show trends with strength {strength} or higher</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

@@ -1,4 +1,6 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,6 +52,9 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    --tab-selected-bg: 210 100% 97%;
+    --tab-selected-text: 197 100% 29%;
   }
 
   .dark {
@@ -88,15 +93,74 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --tab-selected-bg: 210 100% 20%;
+    --tab-selected-text: 197 100% 70%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border font-[Inter];
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[#f8f9fc] text-foreground;
   }
+  
+  h1, h2, h3 {
+    @apply text-[16px] font-medium;
+  }
+  
+  h4, h5, h6 {
+    @apply text-[14px] font-medium;
+  }
+  
+  p, span, div, a, button, input, select, textarea {
+    @apply text-[13px];
+  }
+  
+  .tab-selected {
+    @apply bg-[#eaf4ff] text-[#006c8f];
+  }
+}
+
+.sentiment-positive {
+  @apply bg-green-100/80 text-green-800;
+}
+
+.sentiment-negative {
+  @apply bg-red-100/80 text-red-800;
+}
+
+.sentiment-neutral {
+  @apply bg-blue-100/80 text-blue-800;
+}
+
+.impact-high {
+  @apply bg-blue-600 text-white;
+}
+
+.impact-medium {
+  @apply bg-blue-400 text-white;
+}
+
+.impact-low {
+  @apply bg-blue-200 text-gray-700;
+}
+
+.enhance-button {
+  @apply bg-[#eaf4ff] text-[#006c8f] hover:bg-[#d5e8ff];
+}
+
+.border-sentiment-positive {
+  @apply border-l-green-500;
+}
+
+.border-sentiment-negative {
+  @apply border-l-red-500;
+}
+
+.border-sentiment-neutral {
+  @apply border-l-blue-500;
 }

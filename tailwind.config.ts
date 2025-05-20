@@ -19,8 +19,14 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'inter': ['Inter', 'sans-serif'],
+			},
 			screens: {
 				'xs': '480px',
+			},
+			borderWidth: {
+				'3': '3px',
 			},
 			colors: {
 				border: 'hsl(var(--border))',
