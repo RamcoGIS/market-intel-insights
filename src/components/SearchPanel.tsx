@@ -88,7 +88,7 @@ export function SearchPanel() {
 
   return (
     <div className="space-y-6 w-full">
-      <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-4 z-10 w-full">
+      <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-2 z-10 w-full dark:bg-gray-900">
         <form onSubmit={handleSearch} className="relative w-full">
           <TooltipProvider>
             <Tooltip>
@@ -115,9 +115,9 @@ export function SearchPanel() {
           </TooltipProvider>
         </form>
         
-        <div className="flex flex-wrap gap-4 mt-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-[14px] font-medium">Time Range</span>
+        <div className="flex gap-4 mt-4">
+          <div className="filter-card flex-1">
+            <span className="filter-label block">Time Range</span>
             <div className="flex flex-wrap items-center gap-2">
               {(['day', 'week', 'month', 'year', 'all'] as TimeRange[]).map(timeRange => (
                 <TooltipProvider key={timeRange}>
@@ -141,13 +141,11 @@ export function SearchPanel() {
               ))}
             </div>
           </div>
-        </div>
-        
-        {results.length > 0 && (
-          <>
-            <div className="flex flex-wrap gap-4 mt-4">
-              <div className="flex flex-col gap-2">
-                <span className="text-[14px] font-medium">Sentiment</span>
+          
+          {results.length > 0 && (
+            <>
+              <div className="filter-card flex-1">
+                <span className="filter-label block">Sentiment</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
                     <TooltipProvider key={sentiment}>
@@ -170,11 +168,9 @@ export function SearchPanel() {
                   ))}
                 </div>
               </div>
-            </div>
-            
-            <div className="flex flex-wrap gap-4 mt-4">
-              <div className="flex flex-col gap-2">
-                <span className="text-[14px] font-medium">Impact</span>
+              
+              <div className="filter-card flex-1">
+                <span className="filter-label block">Impact</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['high', 'medium', 'low'] as Impact[]).map(impact => (
                     <TooltipProvider key={impact}>
@@ -197,9 +193,9 @@ export function SearchPanel() {
                   ))}
                 </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
       
       <div className="space-y-4 w-full">
@@ -216,9 +212,9 @@ export function SearchPanel() {
             Searching...
           </div>
         ) : (
-          <div className="bg-white rounded-lg p-8 text-center">
-            <h3 className="text-[16px] font-medium text-gray-900 mb-2">Find the latest market insights</h3>
-            <p className="text-[13px] text-gray-600">
+          <div className="bg-white rounded-lg p-8 text-center dark:bg-gray-800">
+            <h3 className="text-[16px] font-medium text-gray-900 mb-2 dark:text-gray-100">Find the latest market insights</h3>
+            <p className="text-[13px] text-gray-600 dark:text-gray-300">
               Enter a search query about market trends, competitors, or industry news to get AI-analyzed results.
             </p>
           </div>

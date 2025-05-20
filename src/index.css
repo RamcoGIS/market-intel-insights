@@ -38,23 +38,18 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
     
     --tab-selected-bg: 210 100% 97%;
     --tab-selected-text: 197 100% 29%;
+    
+    --filter-text: 220 16% 46%; /* #667085 in HSL */
   }
 
   .dark {
@@ -85,6 +80,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -96,6 +92,8 @@
 
     --tab-selected-bg: 210 100% 20%;
     --tab-selected-text: 197 100% 70%;
+    
+    --filter-text: 220 16% 74%; /* Lighter version of #667085 for dark mode */
   }
 }
 
@@ -105,7 +103,7 @@
   }
 
   body {
-    @apply bg-[#f8f9fc] text-foreground;
+    @apply bg-[#f8f9fc] text-foreground dark:bg-gray-900;
   }
   
   h1, h2, h3 {
@@ -123,34 +121,42 @@
   .tab-selected {
     @apply bg-[#eaf4ff] text-[#006c8f];
   }
+
+  .filter-card {
+    @apply bg-gray-100 shadow-sm p-3 rounded-md dark:bg-gray-800;
+  }
+
+  .filter-label {
+    @apply text-[#667085] dark:text-gray-300 font-medium mb-2;
+  }
 }
 
 .sentiment-positive {
-  @apply bg-green-100/80 text-green-800;
+  @apply bg-green-100/80 text-green-800 dark:bg-green-900/30 dark:text-green-300;
 }
 
 .sentiment-negative {
-  @apply bg-red-100/80 text-red-800;
+  @apply bg-red-100/80 text-red-800 dark:bg-red-900/30 dark:text-red-300;
 }
 
 .sentiment-neutral {
-  @apply bg-blue-100/80 text-blue-800;
+  @apply bg-blue-100/80 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300;
 }
 
 .impact-high {
-  @apply bg-blue-600 text-white;
+  @apply bg-blue-600 text-white dark:bg-blue-500;
 }
 
 .impact-medium {
-  @apply bg-blue-400 text-white;
+  @apply bg-blue-400 text-white dark:bg-blue-400;
 }
 
 .impact-low {
-  @apply bg-blue-200 text-gray-700;
+  @apply bg-blue-200 text-gray-700 dark:bg-blue-700 dark:text-blue-100;
 }
 
 .enhance-button {
-  @apply bg-[#eaf4ff] text-[#006c8f] hover:bg-[#d5e8ff];
+  @apply bg-[#eaf4ff] text-[#006c8f] hover:bg-[#d5e8ff] dark:bg-blue-900/50 dark:text-blue-300 dark:hover:bg-blue-800;
 }
 
 .border-sentiment-positive {
@@ -173,4 +179,25 @@ input:focus {
 /* Adjust button widths */
 .btn-narrow {
   @apply w-auto !important;
+}
+
+/* Dark mode styles */
+.dark .bg-white {
+  @apply bg-gray-800;
+}
+
+.dark .bg-[#f8f9fc] {
+  @apply bg-gray-900;
+}
+
+.dark .text-gray-800 {
+  @apply text-gray-100;
+}
+
+.dark .text-gray-600 {
+  @apply text-gray-300;
+}
+
+.dark .text-gray-500 {
+  @apply text-gray-400;
 }

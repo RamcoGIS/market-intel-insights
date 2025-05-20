@@ -18,12 +18,12 @@ export function TrendsPanel() {
 
   return (
     <div className="space-y-6 w-full">
-      <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-4 z-10 w-full">
+      <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-2 z-10 w-full dark:bg-gray-900">
         <h2 className="text-[16px] font-semibold mb-3">Current Market Trends</h2>
         
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-[14px] font-medium">Sentiment</span>
+        <div className="flex gap-4">
+          <div className="filter-card flex-1">
+            <span className="filter-label block">Sentiment</span>
             <div className="flex flex-wrap items-center gap-2">
               <TooltipProvider>
                 <Tooltip>
@@ -65,8 +65,8 @@ export function TrendsPanel() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-[14px] font-medium">Impact</span>
+          <div className="filter-card flex-1">
+            <span className="filter-label block">Impact</span>
             <div className="flex flex-wrap items-center gap-2">
               <TooltipProvider>
                 <Tooltip>
@@ -116,7 +116,7 @@ export function TrendsPanel() {
             <TrendCard key={trend.id} trend={trend} />
           ))
         ) : (
-          <div className="text-center py-8 text-gray-500 col-span-1 md:col-span-2">
+          <div className="text-center py-8 text-gray-500 col-span-1 md:col-span-2 dark:text-gray-400">
             No trends match your filter criteria
           </div>
         )}

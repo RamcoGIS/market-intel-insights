@@ -22,7 +22,7 @@ export default function MarketResearch() {
     <div className="min-h-screen bg-[#f8f9fc] flex flex-col w-full">
       {/* Header */}
       <div className="bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full">
-        <div className="flex justify-between items-center max-w-[1440px] mx-auto px-4 py-4">
+        <div className="flex justify-between items-center max-w-[1440px] mx-auto px-4 py-2">
           <div>
             <h1 className="text-[16px] font-bold text-gray-800">MarketIntel AI</h1>
             <p className="text-[13px] text-gray-500">Real-time market intelligence</p>
@@ -33,16 +33,16 @@ export default function MarketResearch() {
 
       {/* Main Content */}
       <div className="flex-grow w-full">
-        <div className="max-w-[1440px] mx-auto px-4 py-6 h-full">
+        <div className="max-w-[1440px] mx-auto px-4 py-4 h-full flex flex-col">
           {/* Tabs Navigation */}
           <Tabs 
             defaultValue="search" 
             value={activeTab} 
             onValueChange={(value) => setActiveTab(value as TabType)}
-            className="w-full h-full"
+            className="w-full h-full flex flex-col"
           >
-            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-6">
-              <TabsList className="bg-white">
+            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-4 self-center w-[40%] min-w-[300px]">
+              <TabsList className="bg-white w-full">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -97,22 +97,22 @@ export default function MarketResearch() {
             </div>
 
             {/* Tab Content */}
-            <div className="w-full">
-              <TabsContent value="search" className="mt-2 w-full">
+            <div className="w-full flex-grow overflow-auto">
+              <TabsContent value="search" className="mt-2 w-full h-full">
                 <SearchPanel />
               </TabsContent>
 
-              <TabsContent value="trends" className="mt-2 w-full">
+              <TabsContent value="trends" className="mt-2 w-full h-full">
                 <TrendsPanel />
               </TabsContent>
 
-              <TabsContent value="history" className="mt-2 w-full">
+              <TabsContent value="history" className="mt-2 w-full h-full">
                 <HistoryPanel />
               </TabsContent>
             </div>
           </Tabs>
           
-          <div className="mt-6 text-center text-[13px] text-blue-600">
+          <div className="mt-auto pt-4 text-center text-[13px] text-blue-600">
             <p>Data is updated in real-time using AI analysis</p>
           </div>
         </div>
