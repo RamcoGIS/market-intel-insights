@@ -15,8 +15,8 @@ export function HistoryPanel() {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
   const [filters, setFilters] = useState({
     sentiment: [] as Sentiment[],
-    impact: '' as Impact | '',
-    priority: '' as Priority | '',
+    impact: 'all' as Impact | 'all',
+    priority: 'all' as Priority | 'all',
   });
   const [activeQuery, setActiveQuery] = useState<string | null>(null);
 
@@ -45,7 +45,7 @@ export function HistoryPanel() {
 
   const filteredQueries = sampleSearchQueries.filter(query => {
     // If no filters, show all
-    if (filters.sentiment.length === 0 && !filters.impact && !filters.priority) {
+    if (filters.sentiment.length === 0 && filters.impact === 'all' && filters.priority === 'all') {
       return true;
     }
     
@@ -53,10 +53,10 @@ export function HistoryPanel() {
     return query.results.some(result => {
       const matchesSentiment = filters.sentiment.length === 0 || 
                               filters.sentiment.includes(result.sentiment);
-      const matchesImpact = !filters.impact || result.impact === filters.impact;
+      const matchesImpact = filters.impact === 'all' || result.impact === filters.impact;
       // Simulate priority based on impact
       const resultPriority = result.impact === 'high' ? 'urgent' : result.impact === 'medium' ? 'medium' : 'low';
-      const matchesPriority = !filters.priority || resultPriority === filters.priority;
+      const matchesPriority = filters.priority === 'all' || resultPriority === filters.priority;
       return matchesSentiment && matchesImpact && matchesPriority;
     });
   });
