@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { sampleSearchQueries } from "../data/sample-market-data";
 import { SearchResultCard } from "./SearchResultCard";
@@ -58,7 +59,7 @@ export function HistoryPanel() {
       const matchesPriority = !filters.priority || resultPriority === filters.priority;
       return matchesSentiment && matchesImpact && matchesPriority;
     });
-  };
+  });
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
