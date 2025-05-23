@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { SearchPanel } from "../components/SearchPanel";
 import { TrendsPanel } from "../components/TrendsPanel";
@@ -21,8 +20,8 @@ export default function MarketResearch() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fc] flex flex-col w-full dark:bg-gray-900">
-      {/* Header */}
-      <div className="bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full dark:bg-gray-800">
+      {/* Fixed Header */}
+      <div className="fixed top-0 left-0 right-0 bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full dark:bg-gray-800 z-20">
         <div className="flex justify-between items-center max-w-[1440px] mx-auto px-4 py-2">
           <div>
             <h1 className="text-[16px] font-bold text-gray-800 dark:text-gray-100">MarketIntel AI</h1>
@@ -35,8 +34,8 @@ export default function MarketResearch() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-grow w-full pb-16">
+      {/* Main Content with top padding to account for fixed header */}
+      <div className="flex-grow w-full pb-16 pt-16">
         <div className="max-w-[1440px] mx-auto px-4 py-4 h-full flex flex-col">
           {/* Tabs Navigation */}
           <Tabs 
