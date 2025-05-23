@@ -8,18 +8,19 @@ import { Sentiment, Impact } from "../types/market-research";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type Priority = 'urgent' | 'high' | 'medium' | 'low';
+type FilterValue = 'all';
 
 export function TrendsPanel() {
   const [sentimentFilter, setSentimentFilter] = useState<Sentiment | null>(null);
-  const [impactFilter, setImpactFilter] = useState<Impact | ''>('');
-  const [priorityFilter, setPriorityFilter] = useState<Priority | ''>('');
+  const [impactFilter, setImpactFilter] = useState<Impact | FilterValue>('all');
+  const [priorityFilter, setPriorityFilter] = useState<Priority | FilterValue>('all');
   
   const filteredTrends = sampleTrends.filter(trend => {
     const matchesSentiment = !sentimentFilter || trend.sentiment === sentimentFilter;
-    const matchesImpact = !impactFilter || trend.impact === impactFilter;
+    const matchesImpact = impactFilter === 'all' || trend.impact === impactFilter;
     // Simulate priority based on impact
     const trendPriority = trend.impact === 'high' ? 'urgent' : trend.impact === 'medium' ? 'medium' : 'low';
-    const matchesPriority = !priorityFilter || trendPriority === priorityFilter;
+    const matchesPriority = priorityFilter === 'all' || trendPriority === priorityFilter;
     return matchesSentiment && matchesImpact && matchesPriority;
   });
 
@@ -74,12 +75,12 @@ export function TrendsPanel() {
 
           <div className="flex flex-col">
             <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Impact</span>
-            <Select value={impactFilter} onValueChange={(value: Impact | '') => setImpactFilter(value)}>
+            <Select value={impactFilter} onValueChange={(value: Impact | FilterValue) => setImpactFilter(value)}>
               <SelectTrigger className="w-[120px] h-7 text-[13px]">
                 <SelectValue placeholder="All" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                <SelectItem value="all" className="text-[#667085]">All</SelectItem>
                 <SelectItem value="high" className="text-[#667085]">High</SelectItem>
                 <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
                 <SelectItem value="low" className="text-[#667085]">Low</SelectItem>
@@ -89,12 +90,12 @@ export function TrendsPanel() {
 
           <div className="flex flex-col">
             <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Priority</span>
-            <Select value={priorityFilter} onValueChange={(value: Priority | '') => setPriorityFilter(value)}>
+            <Select value={priorityFilter} onValueChange={(value: Priority | FilterValue) => setPriorityFilter(value)}>
               <SelectTrigger className="w-[120px] h-7 text-[13px]">
                 <SelectValue placeholder="All" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                <SelectItem value="all" className="text-[#667085]">All</SelectItem>
                 <SelectItem value="urgent" className="text-[#667085]">Urgent</SelectItem>
                 <SelectItem value="high" className="text-[#667085]">High</SelectItem>
                 <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
