@@ -36,7 +36,7 @@ export default function MarketResearch() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow w-full">
+      <div className="flex-grow w-full pb-16">
         <div className="max-w-[1440px] mx-auto px-4 py-4 h-full flex flex-col">
           {/* Tabs Navigation */}
           <Tabs 
@@ -115,10 +115,13 @@ export default function MarketResearch() {
               </TabsContent>
             </div>
           </Tabs>
-          
-          <div className="mt-auto pt-4 text-center text-[13px] text-blue-600 dark:text-blue-400">
-            <p>Data is updated in real-time using AI analysis</p>
-          </div>
+        </div>
+      </div>
+
+      {/* Fixed Footer */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2 z-10">
+        <div className="max-w-[1440px] mx-auto px-4 text-center text-[13px] text-blue-600 dark:text-blue-400">
+          <p>Data is updated in real-time using AI analysis</p>
         </div>
       </div>
     </div>
