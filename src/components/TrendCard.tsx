@@ -2,6 +2,7 @@
 import { TrendItem } from "../types/market-research";
 import { SentimentBadge } from "./SentimentBadge";
 import { ImpactBadge } from "./ImpactBadge";
+import { PriorityBadge } from "./PriorityBadge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -11,6 +12,9 @@ interface TrendCardProps {
 }
 
 export function TrendCard({ trend }: TrendCardProps) {
+  // Calculate priority based on impact for consistency
+  const priority = trend.impact === 'high' ? 'urgent' : trend.impact === 'medium' ? 'medium' : 'low';
+
   return (
     <Card className={`mb-4 overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 animate-fade-in border-l-3 border-sentiment-${trend.sentiment}`}>
       <CardContent className="pt-4">
@@ -38,6 +42,18 @@ export function TrendCard({ trend }: TrendCardProps) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{trend.impact} impact trend</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
+                    <PriorityBadge priority={priority} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{priority} priority trend</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
