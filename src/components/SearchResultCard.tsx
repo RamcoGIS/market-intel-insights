@@ -85,8 +85,9 @@ export function SearchResultCard({ result }: SearchResultCardProps) {
             <div className="flex items-center text-[13px] text-gray-500">
               <Calendar className="h-3.5 w-3.5 mr-1" />
               {new Date(result.date).toLocaleDateString()}
+              <span className="mx-2 text-gray-300">•</span>
+              <span className="text-blue-500">{result.source}</span>
             </div>
-            <span className="text-[13px] text-blue-500">{result.source}</span>
           </div>
         </div>
       </CardHeader>
