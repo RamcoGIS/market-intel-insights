@@ -10,6 +10,7 @@ import { Search, Calendar } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type Priority = 'urgent' | 'high' | 'medium' | 'low';
+type FilterValue = 'all';
 
 export function SearchPanel() {
   const [query, setQuery] = useState("");
@@ -17,8 +18,8 @@ export function SearchPanel() {
   const [isSearching, setIsSearching] = useState(false);
   const [filters, setFilters] = useState({
     sentiment: [] as Sentiment[],
-    impact: '' as Impact | '',
-    priority: '' as Priority | '',
+    impact: 'all' as Impact | FilterValue,
+    priority: 'all' as Priority | FilterValue,
     timeRange: 'week' as TimeRange
   });
 
@@ -60,7 +61,7 @@ export function SearchPanel() {
 
   const filteredResults = results.filter(result => {
     // If no filters are selected, show all results
-    if (filters.sentiment.length === 0 && !filters.impact && !filters.priority) {
+    if (filters.sentiment.length === 0 && filters.impact === 'all' && filters.priority === 'all') {
       return true;
     }
     
@@ -68,11 +69,11 @@ export function SearchPanel() {
     const matchesSentiment = filters.sentiment.length === 0 || filters.sentiment.includes(result.sentiment);
     
     // Check impact filter
-    const matchesImpact = !filters.impact || result.impact === filters.impact;
+    const matchesImpact = filters.impact === 'all' || result.impact === filters.impact;
     
     // For priority, we'll simulate it based on impact (high impact = urgent/high priority)
     const resultPriority = result.impact === 'high' ? 'urgent' : result.impact === 'medium' ? 'medium' : 'low';
-    const matchesPriority = !filters.priority || resultPriority === filters.priority;
+    const matchesPriority = filters.priority === 'all' || resultPriority === filters.priority;
     
     // Result must match all filters
     return matchesSentiment && matchesImpact && matchesPriority;
@@ -163,12 +164,12 @@ export function SearchPanel() {
               
               <div className="flex flex-col">
                 <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Impact</span>
-                <Select value={filters.impact} onValueChange={(value: Impact) => setFilters(prev => ({ ...prev, impact: value }))}>
+                <Select value={filters.impact} onValueChange={(value: Impact | FilterValue) => setFilters(prev => ({ ...prev, impact: value }))}>
                   <SelectTrigger className="w-[120px] h-7 text-[13px]">
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="all" className="text-[#667085]">All</SelectItem>
                     <SelectItem value="high" className="text-[#667085]">High</SelectItem>
                     <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
                     <SelectItem value="low" className="text-[#667085]">Low</SelectItem>
@@ -178,12 +179,12 @@ export function SearchPanel() {
 
               <div className="flex flex-col">
                 <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Priority</span>
-                <Select value={filters.priority} onValueChange={(value: Priority) => setFilters(prev => ({ ...prev, priority: value }))}>
+                <Select value={filters.priority} onValueChange={(value: Priority | FilterValue) => setFilters(prev => ({ ...prev, priority: value }))}>
                   <SelectTrigger className="w-[120px] h-7 text-[13px]">
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="all" className="text-[#667085]">All</SelectItem>
                     <SelectItem value="urgent" className="text-[#667085]">Urgent</SelectItem>
                     <SelectItem value="high" className="text-[#667085]">High</SelectItem>
                     <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
