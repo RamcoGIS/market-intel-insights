@@ -10,13 +10,14 @@ import { Sentiment, Impact } from "../types/market-research";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type Priority = 'urgent' | 'high' | 'medium' | 'low';
+type FilterValue = 'all';
 
 export function HistoryPanel() {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
   const [filters, setFilters] = useState({
     sentiment: [] as Sentiment[],
-    impact: 'all' as Impact | 'all',
-    priority: 'all' as Priority | 'all',
+    impact: 'all' as Impact | FilterValue,
+    priority: 'all' as Priority | FilterValue,
   });
   const [activeQuery, setActiveQuery] = useState<string | null>(null);
 
@@ -107,12 +108,17 @@ export function HistoryPanel() {
               
               <div className="flex flex-col">
                 <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Impact</span>
-                <Select value={filters.impact} onValueChange={(value: Impact | '') => setFilters(prev => ({ ...prev, impact: value }))}>
+                <Select 
+                  value={filters.impact} 
+                  onValueChange={(value: Impact | FilterValue) => 
+                    setFilters(prev => ({ ...prev, impact: value as Impact | FilterValue }))
+                  }
+                >
                   <SelectTrigger className="w-[120px] h-7 text-[13px]">
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="all" className="text-[#667085]">All</SelectItem>
                     <SelectItem value="high" className="text-[#667085]">High</SelectItem>
                     <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
                     <SelectItem value="low" className="text-[#667085]">Low</SelectItem>
@@ -122,12 +128,17 @@ export function HistoryPanel() {
 
               <div className="flex flex-col">
                 <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Priority</span>
-                <Select value={filters.priority} onValueChange={(value: Priority | '') => setFilters(prev => ({ ...prev, priority: value }))}>
+                <Select 
+                  value={filters.priority} 
+                  onValueChange={(value: Priority | FilterValue) => 
+                    setFilters(prev => ({ ...prev, priority: value as Priority | FilterValue }))
+                  }
+                >
                   <SelectTrigger className="w-[120px] h-7 text-[13px]">
                     <SelectValue placeholder="All" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="all" className="text-[#667085]">All</SelectItem>
                     <SelectItem value="urgent" className="text-[#667085]">Urgent</SelectItem>
                     <SelectItem value="high" className="text-[#667085]">High</SelectItem>
                     <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
