@@ -4,9 +4,12 @@ import { SearchResultCard } from "./SearchResultCard";
 import { sampleSearchResults } from "../data/sample-market-data";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SearchResult, Sentiment, Impact, TimeRange } from "../types/market-research";
 import { Search, Calendar } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
+type Priority = 'urgent' | 'high' | 'medium' | 'low';
 
 export function SearchPanel() {
   const [query, setQuery] = useState("");
@@ -14,7 +17,8 @@ export function SearchPanel() {
   const [isSearching, setIsSearching] = useState(false);
   const [filters, setFilters] = useState({
     sentiment: [] as Sentiment[],
-    impact: [] as Impact[],
+    impact: '' as Impact | '',
+    priority: '' as Priority | '',
     timeRange: 'week' as TimeRange
   });
 
@@ -47,22 +51,6 @@ export function SearchPanel() {
     });
   };
 
-  const toggleImpactFilter = (impact: Impact) => {
-    setFilters(prev => {
-      if (prev.impact.includes(impact)) {
-        return {
-          ...prev,
-          impact: prev.impact.filter(i => i !== impact)
-        };
-      } else {
-        return {
-          ...prev,
-          impact: [...prev.impact, impact]
-        };
-      }
-    });
-  };
-
   const setTimeRange = (timeRange: TimeRange) => {
     setFilters(prev => ({
       ...prev,
@@ -72,7 +60,7 @@ export function SearchPanel() {
 
   const filteredResults = results.filter(result => {
     // If no filters are selected, show all results
-    if (filters.sentiment.length === 0 && filters.impact.length === 0) {
+    if (filters.sentiment.length === 0 && !filters.impact && !filters.priority) {
       return true;
     }
     
@@ -80,10 +68,14 @@ export function SearchPanel() {
     const matchesSentiment = filters.sentiment.length === 0 || filters.sentiment.includes(result.sentiment);
     
     // Check impact filter
-    const matchesImpact = filters.impact.length === 0 || filters.impact.includes(result.impact);
+    const matchesImpact = !filters.impact || result.impact === filters.impact;
     
-    // Result must match both filters
-    return matchesSentiment && matchesImpact;
+    // For priority, we'll simulate it based on impact (high impact = urgent/high priority)
+    const resultPriority = result.impact === 'high' ? 'urgent' : result.impact === 'medium' ? 'medium' : 'low';
+    const matchesPriority = !filters.priority || resultPriority === filters.priority;
+    
+    // Result must match all filters
+    return matchesSentiment && matchesImpact && matchesPriority;
   });
 
   return (
@@ -115,9 +107,9 @@ export function SearchPanel() {
           </TooltipProvider>
         </form>
         
-        <div className="flex flex-wrap gap-4 mt-4">
+        <div className="flex flex-wrap items-center gap-6 mt-4">
           <div className="flex flex-col">
-            <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Time Range</span>
+            <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Time Range</span>
             <div className="flex flex-wrap items-center gap-2">
               {(['day', 'week', 'month', 'year', 'all'] as TimeRange[]).map(timeRange => (
                 <TooltipProvider key={timeRange}>
@@ -127,10 +119,10 @@ export function SearchPanel() {
                         variant="outline"
                         size="sm"
                         onClick={() => setTimeRange(timeRange)}
-                        className={`h-7 text-[13px] capitalize ${filters.timeRange === timeRange ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
+                        className={`h-7 text-[13px] capitalize ${filters.timeRange === timeRange ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-[#667085]'}`}
                       >
-                        <Calendar className="mr-1 h-3 w-3" />
-                        {timeRange}
+                        <Calendar className="mr-1 h-3 w-3 text-[#667085]" />
+                        <span className="text-[#667085]">{timeRange}</span>
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -145,7 +137,7 @@ export function SearchPanel() {
           {results.length > 0 && (
             <>
               <div className="flex flex-col">
-                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Sentiment</span>
+                <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Sentiment</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
                     <TooltipProvider key={sentiment}>
@@ -155,9 +147,9 @@ export function SearchPanel() {
                             variant="outline"
                             size="sm"
                             onClick={() => toggleSentimentFilter(sentiment)}
-                            className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
+                            className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-[#667085]'}`}
                           >
-                            {sentiment}
+                            <span className="text-[#667085]">{sentiment}</span>
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -170,28 +162,34 @@ export function SearchPanel() {
               </div>
               
               <div className="flex flex-col">
-                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Impact</span>
-                <div className="flex flex-wrap items-center gap-2">
-                  {(['high', 'medium', 'low'] as Impact[]).map(impact => (
-                    <TooltipProvider key={impact}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => toggleImpactFilter(impact)}
-                            className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
-                          >
-                            {impact}
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>Filter by {impact} impact</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  ))}
-                </div>
+                <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Impact</span>
+                <Select value={filters.impact} onValueChange={(value: Impact) => setFilters(prev => ({ ...prev, impact: value }))}>
+                  <SelectTrigger className="w-[120px] h-7 text-[13px]">
+                    <SelectValue placeholder="All" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="high" className="text-[#667085]">High</SelectItem>
+                    <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
+                    <SelectItem value="low" className="text-[#667085]">Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Priority</span>
+                <Select value={filters.priority} onValueChange={(value: Priority) => setFilters(prev => ({ ...prev, priority: value }))}>
+                  <SelectTrigger className="w-[120px] h-7 text-[13px]">
+                    <SelectValue placeholder="All" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="urgent" className="text-[#667085]">Urgent</SelectItem>
+                    <SelectItem value="high" className="text-[#667085]">High</SelectItem>
+                    <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
+                    <SelectItem value="low" className="text-[#667085]">Low</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </>
           )}

@@ -1,18 +1,21 @@
-
 import { useState } from "react";
 import { sampleSearchQueries } from "../data/sample-market-data";
 import { SearchResultCard } from "./SearchResultCard";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Calendar, RefreshCcw, Search } from "lucide-react";
 import { Sentiment, Impact } from "../types/market-research";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+type Priority = 'urgent' | 'high' | 'medium' | 'low';
+
 export function HistoryPanel() {
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
   const [filters, setFilters] = useState({
     sentiment: [] as Sentiment[],
-    impact: [] as Impact[],
+    impact: '' as Impact | '',
+    priority: '' as Priority | '',
   });
   const [activeQuery, setActiveQuery] = useState<string | null>(null);
 
@@ -39,37 +42,23 @@ export function HistoryPanel() {
     });
   };
 
-  const toggleImpactFilter = (impact: Impact) => {
-    setFilters(prev => {
-      if (prev.impact.includes(impact)) {
-        return {
-          ...prev,
-          impact: prev.impact.filter(i => i !== impact)
-        };
-      } else {
-        return {
-          ...prev,
-          impact: [...prev.impact, impact]
-        };
-      }
-    });
-  };
-
   const filteredQueries = sampleSearchQueries.filter(query => {
     // If no filters, show all
-    if (filters.sentiment.length === 0 && filters.impact.length === 0) {
+    if (filters.sentiment.length === 0 && !filters.impact && !filters.priority) {
       return true;
     }
     
-    // Check if any result matches both filters
+    // Check if any result matches all filters
     return query.results.some(result => {
       const matchesSentiment = filters.sentiment.length === 0 || 
                               filters.sentiment.includes(result.sentiment);
-      const matchesImpact = filters.impact.length === 0 || 
-                           filters.impact.includes(result.impact);
-      return matchesSentiment && matchesImpact;
+      const matchesImpact = !filters.impact || result.impact === filters.impact;
+      // Simulate priority based on impact
+      const resultPriority = result.impact === 'high' ? 'urgent' : result.impact === 'medium' ? 'medium' : 'low';
+      const matchesPriority = !filters.priority || resultPriority === filters.priority;
+      return matchesSentiment && matchesImpact && matchesPriority;
     });
-  });
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -79,11 +68,6 @@ export function HistoryPanel() {
   const handleRerun = (query: string) => {
     console.log("Re-running query:", query);
     // In a real app, this would trigger a new search
-  };
-
-  const handleEnhance = (query: string) => {
-    console.log("Enhancing query:", query);
-    // In a real app, this would open a dialog or redirect to enhance the query
   };
 
   const handleViewDetails = (queryId: string) => {
@@ -102,9 +86,9 @@ export function HistoryPanel() {
           <div className="sticky top-0 bg-[#f8f9fc] pt-2 pb-4 z-10 dark:bg-gray-900">
             <h2 className="text-[16px] font-semibold mb-3 dark:text-gray-200">Search History</h2>
             
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap items-center gap-6">
               <div className="flex flex-col">
-                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Sentiment</span>
+                <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Sentiment</span>
                 <div className="flex flex-wrap items-center gap-2">
                   {(['positive', 'neutral', 'negative'] as Sentiment[]).map(sentiment => (
                     <Button
@@ -112,29 +96,43 @@ export function HistoryPanel() {
                       variant="outline"
                       size="sm"
                       onClick={() => toggleSentimentFilter(sentiment)}
-                      className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
+                      className={`h-7 text-[13px] capitalize ${filters.sentiment.includes(sentiment) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-[#667085]'}`}
                     >
-                      {sentiment}
+                      <span className="text-[#667085]">{sentiment}</span>
                     </Button>
                   ))}
                 </div>
               </div>
               
               <div className="flex flex-col">
-                <span className="text-[#1d2939] dark:text-gray-200 text-[14px] font-medium mb-2">Impact</span>
-                <div className="flex flex-wrap items-center gap-2">
-                  {(['high', 'medium', 'low'] as Impact[]).map(impact => (
-                    <Button
-                      key={impact}
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toggleImpactFilter(impact)}
-                      className={`h-7 text-[13px] capitalize ${filters.impact.includes(impact) ? 'bg-[#eaf4ff] text-[#006c8f] border-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-400' : 'text-[#667085] dark:text-gray-400'}`}
-                    >
-                      {impact}
-                    </Button>
-                  ))}
-                </div>
+                <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Impact</span>
+                <Select value={filters.impact} onValueChange={(value: Impact | '') => setFilters(prev => ({ ...prev, impact: value }))}>
+                  <SelectTrigger className="w-[120px] h-7 text-[13px]">
+                    <SelectValue placeholder="All" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="high" className="text-[#667085]">High</SelectItem>
+                    <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
+                    <SelectItem value="low" className="text-[#667085]">Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[#1d2939] dark:text-[#1d2939] text-[14px] font-medium mb-2">Priority</span>
+                <Select value={filters.priority} onValueChange={(value: Priority | '') => setFilters(prev => ({ ...prev, priority: value }))}>
+                  <SelectTrigger className="w-[120px] h-7 text-[13px]">
+                    <SelectValue placeholder="All" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="" className="text-[#667085]">All</SelectItem>
+                    <SelectItem value="urgent" className="text-[#667085]">Urgent</SelectItem>
+                    <SelectItem value="high" className="text-[#667085]">High</SelectItem>
+                    <SelectItem value="medium" className="text-[#667085]">Medium</SelectItem>
+                    <SelectItem value="low" className="text-[#667085]">Low</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -196,24 +194,6 @@ export function HistoryPanel() {
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Run this search again</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button 
-                                size="sm"
-                                onClick={() => handleEnhance(queryItem.query)}
-                                className="enhance-button w-auto"
-                              >
-                                <Search className="mr-1 h-4 w-4" />
-                                Enhance
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Enhance this search query</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>

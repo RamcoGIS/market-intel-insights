@@ -45,14 +45,14 @@ export default function MarketResearch() {
             onValueChange={(value) => setActiveTab(value as TabType)}
             className="w-full h-full flex flex-col"
           >
-            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-4 self-start w-[40%] min-w-[300px] dark:bg-gray-800">
-              <TabsList className="bg-white w-full dark:bg-gray-800">
+            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-4 self-start w-auto dark:bg-gray-800">
+              <TabsList className="bg-white w-auto dark:bg-gray-800">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <TabsTrigger 
                         value="search" 
-                        className={`flex items-center ${activeTab === 'search' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
+                        className={`flex items-center px-8 ${activeTab === 'search' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
                       >
                         <Search className="mr-2 h-4 w-4" />
                         <span>Search</span>
@@ -69,7 +69,7 @@ export default function MarketResearch() {
                     <TooltipTrigger asChild>
                       <TabsTrigger 
                         value="trends" 
-                        className={`flex items-center ${activeTab === 'trends' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
+                        className={`flex items-center px-8 ${activeTab === 'trends' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
                       >
                         <TrendingUp className="mr-2 h-4 w-4" />
                         <span>Trends</span>
@@ -86,7 +86,7 @@ export default function MarketResearch() {
                     <TooltipTrigger asChild>
                       <TabsTrigger 
                         value="history" 
-                        className={`flex items-center ${activeTab === 'history' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
+                        className={`flex items-center px-8 ${activeTab === 'history' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
                       >
                         <History className="mr-2 h-4 w-4" />
                         <span>History</span>
