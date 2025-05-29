@@ -110,7 +110,7 @@ export default function MarketResearch() {
           {/* Right Actions */}
           <div className="flex items-center gap-3">
             {/* Theme Toggle */}
-            <button
+            <div
               onClick={toggleTheme}
               className="w-8 h-8 flex items-center justify-center cursor-pointer rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               title="Toggle theme"
@@ -120,7 +120,7 @@ export default function MarketResearch() {
               ) : (
                 <Moon className="w-4 h-4 text-gray-600 dark:text-gray-300" />
               )}
-            </button>
+            </div>
 
             {/* User Avatar Dropdown */}
             <div className="relative">
@@ -136,16 +136,16 @@ export default function MarketResearch() {
                   <div className="p-3 border-b border-gray-200 dark:border-gray-700">
                     <p className="font-medium text-gray-800 dark:text-gray-100">Alex Johnson</p>
                   </div>
-                  <button
+                  <div
                     onClick={() => {
                       setUserDropdownOpen(false);
                       handleLogout();
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-left text-red-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 text-left text-red-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     Log out
-                  </button>
+                  </div>
                 </div>
               )}
             </div>
