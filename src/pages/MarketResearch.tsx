@@ -3,125 +3,169 @@ import { useState } from "react";
 import { SearchPanel } from "../components/SearchPanel";
 import { TrendsPanel } from "../components/TrendsPanel";
 import { HistoryPanel } from "../components/HistoryPanel";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, TrendingUp, History } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { UserAvatar } from "../components/UserAvatar";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { Search, TrendingUp, History, Menu, User, LogOut, Moon, Sun } from "lucide-react";
 
 type TabType = "search" | "trends" | "history";
 
 export default function MarketResearch() {
   const [activeTab, setActiveTab] = useState<TabType>("search");
+  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleLogout = () => {
     console.log("Logging out...");
     // In a real app, this would handle logout logic
   };
 
+  const toggleSidebar = () => {
+    setSidebarExpanded(!sidebarExpanded);
+  };
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark');
+  };
+
+  const handleTabClick = (tab: TabType) => {
+    setActiveTab(tab);
+  };
+
+  const tabConfig = [
+    { id: "search", label: "Search", icon: Search, tooltip: "Search for market insights" },
+    { id: "trends", label: "Trends", icon: TrendingUp, tooltip: "View current market trends" },
+    { id: "history", label: "History", icon: History, tooltip: "Browse your search history" },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#f8f9fc] flex flex-col w-full dark:bg-gray-900">
-      {/* Header */}
-      <div className="bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full dark:bg-gray-800">
-        <div className="flex justify-between items-center max-w-[1440px] mx-auto px-4 py-2">
-          <div>
-            <h1 className="text-[16px] font-bold text-gray-800 dark:text-gray-100">MarketIntel AI</h1>
-            <p className="text-[13px] text-gray-500 dark:text-gray-300">Real-time market intelligence</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <UserAvatar name="Alex Johnson" onLogout={handleLogout} />
-          </div>
+    <div className={`min-h-screen flex overflow-hidden ${isDarkMode ? 'dark' : ''}`}>
+      {/* Sidebar */}
+      <div 
+        className={`bg-white dark:bg-gray-800 flex flex-col items-center py-5 px-3 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 ${
+          sidebarExpanded ? 'w-60' : 'w-16'
+        }`}
+      >
+        {/* Hamburger menu */}
+        <div
+          className="w-5 h-5 cursor-pointer mb-8 self-start ml-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+          onClick={toggleSidebar}
+          title="Toggle Menu"
+        >
+          <Menu className="w-5 h-5" />
         </div>
+
+        {/* Menu Items */}
+        <div className="flex flex-col gap-3 w-full">
+          {tabConfig.map((tab) => {
+            const active = tab.id === activeTab;
+            const IconComponent = tab.icon;
+
+            return (
+              <div
+                key={tab.id}
+                title={tab.tooltip}
+                onClick={() => handleTabClick(tab.id as TabType)}
+                className={`flex items-center p-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                  active 
+                    ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300" 
+                    : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+                }`}
+              >
+                <div className="w-5 h-5 overflow-hidden">
+                  <IconComponent className="w-5 h-5" />
+                </div>
+                {sidebarExpanded && (
+                  <span className="ml-3 transition-opacity duration-200 whitespace-nowrap text-sm font-medium">
+                    {tab.label}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Footer */}
+        {sidebarExpanded ? (
+          <div className="mt-auto mb-4 text-xs text-gray-500 dark:text-gray-400 self-start ml-2">
+            <p className="m-0">Powered By</p>
+            <p className="m-0 font-medium">MarketIntel AI</p>
+          </div>
+        ) : (
+          <div className="mt-auto mb-4 w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+            <span className="text-blue-600 dark:text-blue-300 text-xs font-bold">MI</span>
+          </div>
+        )}
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow w-full pb-16">
-        <div className="max-w-[1440px] mx-auto px-4 py-4 h-full flex flex-col">
-          {/* Tabs Navigation */}
-          <Tabs 
-            defaultValue="search" 
-            value={activeTab} 
-            onValueChange={(value) => setActiveTab(value as TabType)}
-            className="w-full h-full flex flex-col"
-          >
-            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-4 self-start w-auto dark:bg-gray-800">
-              <TabsList className="bg-white w-auto dark:bg-gray-800">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <TabsTrigger 
-                        value="search" 
-                        className={`flex items-center px-8 ${activeTab === 'search' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
-                      >
-                        <Search className="mr-2 h-4 w-4" />
-                        <span>Search</span>
-                      </TabsTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Search for market insights</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <TabsTrigger 
-                        value="trends" 
-                        className={`flex items-center px-8 ${activeTab === 'trends' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
-                      >
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        <span>Trends</span>
-                      </TabsTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>View current market trends</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <TabsTrigger 
-                        value="history" 
-                        className={`flex items-center px-8 ${activeTab === 'history' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
-                      >
-                        <History className="mr-2 h-4 w-4" />
-                        <span>History</span>
-                      </TabsTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Browse your search history</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </TabsList>
+      <div className="flex flex-col flex-1 overflow-hidden">
+        {/* Fixed Header */}
+        <div className="bg-white dark:bg-gray-800 flex justify-between items-center px-4 py-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
+          {/* Title */}
+          <div>
+            <h1 className="text-base font-bold text-gray-800 dark:text-gray-100">MarketIntel AI</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-300">Real-time market intelligence</p>
+          </div>
+
+          {/* Right Actions */}
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-8 h-8 flex items-center justify-center cursor-pointer rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              title="Toggle theme"
+            >
+              {isDarkMode ? (
+                <Sun className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+              ) : (
+                <Moon className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+              )}
+            </button>
+
+            {/* User Avatar Dropdown */}
+            <div className="relative">
+              <div
+                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700 transition-colors"
+              >
+                <span className="text-white text-sm font-medium">AJ</span>
+              </div>
+
+              {userDropdownOpen && (
+                <div className="absolute right-0 top-10 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50">
+                  <div className="p-3 border-b border-gray-200 dark:border-gray-700">
+                    <p className="font-medium text-gray-800 dark:text-gray-100">Alex Johnson</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setUserDropdownOpen(false);
+                      handleLogout();
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-left text-red-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Log out
+                  </button>
+                </div>
+              )}
             </div>
-
-            {/* Tab Content */}
-            <div className="w-full flex-grow overflow-auto">
-              <TabsContent value="search" className="mt-2 w-full h-full">
-                <SearchPanel />
-              </TabsContent>
-
-              <TabsContent value="trends" className="mt-2 w-full h-full">
-                <TrendsPanel />
-              </TabsContent>
-
-              <TabsContent value="history" className="mt-2 w-full h-full">
-                <HistoryPanel />
-              </TabsContent>
-            </div>
-          </Tabs>
+          </div>
         </div>
-      </div>
 
-      {/* Fixed Footer */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2 z-10">
-        <div className="max-w-[1440px] mx-auto px-4 text-center text-[13px] text-blue-600 dark:text-blue-400">
-          <p>Data is updated in real-time using AI analysis</p>
+        {/* Tab Content */}
+        <div className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 py-4 h-full">
+            {activeTab === "search" && <SearchPanel />}
+            {activeTab === "trends" && <TrendsPanel />}
+            {activeTab === "history" && <HistoryPanel />}
+          </div>
+        </div>
+
+        {/* Fixed Footer */}
+        <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2 sticky bottom-0 z-10">
+          <div className="max-w-7xl mx-auto px-4 text-center text-sm text-blue-600 dark:text-blue-400">
+            <p>Data is updated in real-time using AI analysis</p>
+          </div>
         </div>
       </div>
     </div>

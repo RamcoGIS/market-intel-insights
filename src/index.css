@@ -9,34 +9,24 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 210 100% 36%; /* Blue shade */
+    --primary: 210 100% 36%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
     --radius: 0.5rem;
-
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -45,43 +35,32 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    
     --tab-selected-bg: 210 100% 97%;
     --tab-selected-text: 197 100% 29%;
-    
-    --filter-text: 220 16% 46%; /* #667085 in HSL */
-    --filter-heading: 220 24% 17%; /* #1d2939 in HSL */
+    --filter-text: 220 16% 46%;
+    --filter-heading: 220 24% 17%;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 210 100% 52%; /* Brighter blue for dark mode */
+    --primary: 210 100% 52%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -90,38 +69,37 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-
     --tab-selected-bg: 210 100% 20%;
     --tab-selected-text: 197 100% 70%;
-    
-    --filter-text: 220 16% 74%; /* Lighter version of #667085 for dark mode */
-    --filter-heading: 220 20% 80%; /* Lighter version of #1d2939 for dark mode */
+    --filter-text: 220 16% 74%;
+    --filter-heading: 220 20% 80%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border font-[Inter];
+    @apply border-border font-inter;
   }
 
   body {
-    @apply bg-[#f8f9fc] text-foreground dark:bg-gray-900;
+    @apply bg-gray-50 text-foreground dark:bg-gray-900;
+    font-family: 'Inter', sans-serif;
   }
   
   h1, h2, h3 {
-    @apply text-[16px] font-medium;
+    @apply text-base font-medium;
   }
   
   h4, h5, h6 {
-    @apply text-[14px] font-medium;
+    @apply text-sm font-medium;
   }
   
   p, span, div, a, button, input, select, textarea {
-    @apply text-[13px];
+    @apply text-sm;
   }
   
   .tab-selected {
-    @apply bg-[#eaf4ff] text-[#006c8f];
+    @apply bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-300;
   }
 
   .filter-card {
@@ -129,14 +107,49 @@
   }
 
   .filter-label {
-    @apply text-[#1d2939] dark:text-gray-200 font-medium mb-2;
+    @apply text-gray-800 dark:text-gray-200 font-medium mb-2;
   }
 
   .filter-value {
-    @apply text-[#667085] dark:text-gray-400;
+    @apply text-gray-600 dark:text-gray-400;
+  }
+
+  /* Custom scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-track {
+    background: #374151;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #6b7280;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
   }
 }
 
+/* Sentiment and Impact styles */
 .sentiment-positive {
   @apply bg-green-100/80 text-green-800 dark:bg-green-900/30 dark:text-green-300;
 }
@@ -162,7 +175,7 @@
 }
 
 .enhance-button {
-  @apply bg-[#eaf4ff] text-[#006c8f] hover:bg-[#d5e8ff] dark:bg-blue-900/50 dark:text-blue-300 dark:hover:bg-blue-800;
+  @apply bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/50 dark:text-blue-300 dark:hover:bg-blue-800;
 }
 
 .border-sentiment-positive {
@@ -177,33 +190,18 @@
   @apply border-l-blue-500;
 }
 
-/* Add specific styling for focus state on input fields */
+/* Focus states for input fields */
 input:focus {
-  @apply border-[#006c8f] shadow-md;
+  @apply border-blue-600 shadow-md outline-none;
 }
 
-/* Adjust button widths */
+/* Button utilities */
 .btn-narrow {
-  @apply w-auto !important;
+  @apply w-auto;
 }
 
-/* Dark mode styles */
-.dark .bg-white {
-  @apply bg-gray-800;
-}
-
-.dark .bg-[#f8f9fc] {
-  @apply bg-gray-900;
-}
-
-.dark .text-gray-800 {
-  @apply text-gray-100;
-}
-
-.dark .text-gray-600 {
-  @apply text-gray-300;
-}
-
-.dark .text-gray-500 {
-  @apply text-gray-400;
+/* Dropdown fix to ensure proper background */
+.dropdown-content {
+  @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg;
+  z-index: 50;
 }
