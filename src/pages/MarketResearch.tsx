@@ -43,8 +43,8 @@ export default function MarketResearch() {
         {/* Header */}
         <AppHeader title="MarketIntel AI - Real-time market intelligence" onLogout={handleLogout} />
         
-        {/* Content */}
-        <div className="flex-1 relative overflow-hidden">
+        {/* Content with padding for fixed header */}
+        <div className="flex-1 relative overflow-hidden pt-[73px]">
           <div className="h-full bg-[#f8f9fc] dark:bg-[#1d2431]">
             <div className="max-w-[1440px] mx-auto px-4 py-4 h-full">
               {renderTabContent()}
@@ -53,7 +53,7 @@ export default function MarketResearch() {
         </div>
         
         {/* Fixed Footer */}
-        <div className="bg-white dark:bg-[#0C121E] border-t border-[#eaecf0] dark:border-[#344054] py-2">
+        <div className="bg-white dark:bg-[#0C121E] border-t border-[#eaecf0] dark:border-[#344054] py-2 fixed bottom-0 left-0 right-0 z-40">
           <div className="max-w-[1440px] mx-auto px-4 text-center text-[13px] text-blue-600 dark:text-blue-400">
             <p>Data is updated in real-time using AI analysis</p>
           </div>

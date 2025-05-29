@@ -9,7 +9,7 @@ interface AppHeaderProps {
 
 export function AppHeader({ title, onLogout }: AppHeaderProps) {
   return (
-    <div className="bg-white dark:bg-[#0C121E] flex justify-between items-center px-4 py-4 border-b border-[#eaecf0] dark:border-[#344054]">
+    <div className="bg-white dark:bg-[#0C121E] flex justify-between items-center px-4 py-4 border-b border-[#eaecf0] dark:border-[#344054] fixed top-0 left-0 right-0 z-40">
       {/* Title */}
       <div className="h-5 font-sans text-[15px] font-bold text-black dark:text-white">{title}</div>
 
