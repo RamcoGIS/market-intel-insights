@@ -1,12 +1,10 @@
+
 import { useState } from "react";
 import { SearchPanel } from "../components/SearchPanel";
 import { TrendsPanel } from "../components/TrendsPanel";
 import { HistoryPanel } from "../components/HistoryPanel";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, TrendingUp, History } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { UserAvatar } from "../components/UserAvatar";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { AppSidebar } from "../components/AppSidebar";
+import { AppHeader } from "../components/AppHeader";
 
 type TabType = "search" | "trends" | "history";
 
@@ -18,109 +16,47 @@ export default function MarketResearch() {
     // In a real app, this would handle logout logic
   };
 
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab as TabType);
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "search":
+        return <SearchPanel />;
+      case "trends":
+        return <TrendsPanel />;
+      case "history":
+        return <HistoryPanel />;
+      default:
+        return <SearchPanel />;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#f8f9fc] flex flex-col w-full dark:bg-gray-900">
-      {/* Fixed Header */}
-      <div className="fixed top-0 left-0 right-0 bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] w-full dark:bg-gray-800 z-20">
-        <div className="flex justify-between items-center max-w-[1440px] mx-auto px-4 py-2">
-          <div>
-            <h1 className="text-[16px] font-bold text-gray-800 dark:text-gray-100">MarketIntel AI</h1>
-            <p className="text-[13px] text-gray-500 dark:text-gray-300">Real-time market intelligence</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <UserAvatar name="Alex Johnson" onLogout={handleLogout} />
+    <div className="bg-[#f8f9fc] dark:bg-[#1d2431] flex h-screen overflow-hidden">
+      {/* Sidebar */}
+      <AppSidebar activeTab={activeTab} onTabChange={handleTabChange} />
+      
+      {/* Main Content Area */}
+      <div className="flex flex-col flex-1 overflow-hidden">
+        {/* Header */}
+        <AppHeader title="MarketIntel AI - Real-time market intelligence" onLogout={handleLogout} />
+        
+        {/* Content */}
+        <div className="flex-1 relative overflow-hidden">
+          <div className="h-full bg-[#f8f9fc] dark:bg-[#1d2431]">
+            <div className="max-w-[1440px] mx-auto px-4 py-4 h-full">
+              {renderTabContent()}
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Main Content with top padding to account for fixed header */}
-      <div className="flex-grow w-full pb-16 pt-16">
-        <div className="max-w-[1440px] mx-auto px-4 py-4 h-full flex flex-col">
-          {/* Tabs Navigation */}
-          <Tabs 
-            defaultValue="search" 
-            value={activeTab} 
-            onValueChange={(value) => setActiveTab(value as TabType)}
-            className="w-full h-full flex flex-col"
-          >
-            <div className="bg-white rounded-md shadow-sm p-1 inline-block mb-4 self-start w-auto dark:bg-gray-800">
-              <TabsList className="bg-white w-auto dark:bg-gray-800">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <TabsTrigger 
-                        value="search" 
-                        className={`flex items-center px-8 ${activeTab === 'search' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
-                      >
-                        <Search className="mr-2 h-4 w-4" />
-                        <span>Search</span>
-                      </TabsTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Search for market insights</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <TabsTrigger 
-                        value="trends" 
-                        className={`flex items-center px-8 ${activeTab === 'trends' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
-                      >
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        <span>Trends</span>
-                      </TabsTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>View current market trends</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <TabsTrigger 
-                        value="history" 
-                        className={`flex items-center px-8 ${activeTab === 'history' ? 'bg-[#eaf4ff] text-[#006c8f] dark:bg-blue-900/50 dark:text-blue-300' : ''}`}
-                      >
-                        <History className="mr-2 h-4 w-4" />
-                        <span>History</span>
-                      </TabsTrigger>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Browse your search history</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </TabsList>
-            </div>
-
-            {/* Tab Content */}
-            <div className="w-full flex-grow overflow-auto">
-              <TabsContent value="search" className="mt-2 w-full h-full">
-                <SearchPanel />
-              </TabsContent>
-
-              <TabsContent value="trends" className="mt-2 w-full h-full">
-                <TrendsPanel />
-              </TabsContent>
-
-              <TabsContent value="history" className="mt-2 w-full h-full">
-                <HistoryPanel />
-              </TabsContent>
-            </div>
-          </Tabs>
-        </div>
-      </div>
-
-      {/* Fixed Footer */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-2 z-10">
-        <div className="max-w-[1440px] mx-auto px-4 text-center text-[13px] text-blue-600 dark:text-blue-400">
-          <p>Data is updated in real-time using AI analysis</p>
+        
+        {/* Fixed Footer */}
+        <div className="bg-white dark:bg-[#0C121E] border-t border-[#eaecf0] dark:border-[#344054] py-2">
+          <div className="max-w-[1440px] mx-auto px-4 text-center text-[13px] text-blue-600 dark:text-blue-400">
+            <p>Data is updated in real-time using AI analysis</p>
+          </div>
         </div>
       </div>
     </div>
